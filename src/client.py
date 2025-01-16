@@ -1,5 +1,6 @@
 import socket
 import logging
+from parse import parse_command
 
 
 logger = logging.Logger(__name__)
@@ -29,6 +30,7 @@ if __name__ == "__main__":
         print("Sending data...")
         payload = input("")
         if payload != "":
+            instr = parse_command(payload)
             c.send_payload(payload)
         else:
             print("Payload cannot be empty\n")
