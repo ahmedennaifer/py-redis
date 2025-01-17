@@ -7,7 +7,6 @@ class Command(Enum):
     GET = "GET"
     SET = "SET"
     DEL = "DEL"
-    RES = "RES" # for returning a response 
 
 
 @dataclass

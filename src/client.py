@@ -7,7 +7,7 @@ logger = logging.Logger(__name__)
 logger.setLevel(logging.INFO)
 
 
-class Client:
+class client:
     def __init__(self) -> None:
         self._HOST = "127.0.0.1"
         self._PORT = 65432
@@ -22,7 +22,6 @@ class Client:
         self.socket.sendall(payload.encode("utf-8"))
         data = self.socket.recv(self.get_payload_buffer_size(payload))
         logger.info(f"Sent {data}")
-        return data
 
 
 if __name__ == "__main__":
@@ -32,9 +31,9 @@ if __name__ == "__main__":
         payload = input("")
         if payload != "":
             instr = parse_command(payload)
+            print(instr)
             resp = RESP(instr)
             s_instr = resp.serialize_to_resp()
-            data = c.send_payload(s_instr)
-            print(data.decode('utf-8'))
+            c.send_payload(s_instr)
         else:
             print("Payload cannot be empty\n")
