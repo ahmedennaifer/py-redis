@@ -1,7 +1,7 @@
 import socket
 import logging
 from parse import parse_command
-
+from serialize import RESP
 
 logger = logging.Logger(__name__)
 logger.setLevel(logging.INFO)
@@ -31,6 +31,9 @@ if __name__ == "__main__":
         payload = input("")
         if payload != "":
             instr = parse_command(payload)
-            c.send_payload(payload)
+            print(instr)
+            resp = RESP(instr)
+            s_instr = resp.serialize_to_resp()
+            c.send_payload(s_instr)
         else:
             print("Payload cannot be empty\n")
