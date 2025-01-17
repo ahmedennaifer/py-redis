@@ -46,7 +46,17 @@ class KVStore:
             assert len(k) == k_length
             assert instruction in [member.value for member in Command]
             return CommandResult(command=instruction, key=k, value=None)
-        
+
+    
+        elif instruction == "DEL":
+            n_parts = parts[1]
+            instruction = parts[2]
+            k_length = int(parts[3][1:])
+            k = parts[4]
+            assert len(k) == k_length
+            assert instruction in [member.value for member in Command]
+            return CommandResult(command=instruction, key=k, value=None)
+
     def insert(self, parsed_resp: CommandResult):
         if not isinstance(parsed_resp, CommandResult):
             raise TypeError(f"Argument of type {type(decoded_resp_string)} is not the expected format CommandResult")
@@ -63,10 +73,16 @@ class KVStore:
             v = self.store.get(parsed_resp.key)
             return CommandResult(command=Command.RES, key=parsed_resp.key, value=v)
         else:
-            raise TypeError(f"Key {parsed_resp.key} not found")
             return RESPResponse.ERR        
         
-        
+    
+    def delete(self, parsed_resp: CommandResult) -> Union[CommandResult, RESPResponse]:
+            if self.store.get(parsed_resp.key):
+                self.store.pop(parsed_resp.key)
+                return RESPResponse.OK
+            else:
+                return RESPResponse.ERR        
+             
 if __name__ == "__main__":
     kv = KVStore()
     query = "*3\r\n$3\r\nSET\r\n$4\r\nPoop\r\n$4\r\nPoop\r\n"

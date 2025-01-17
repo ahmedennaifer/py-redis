@@ -24,5 +24,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     res = kv.get(decoded)
                 elif decoded.command == Command.SET.value: 
                     res = kv.insert(decoded)
+                elif decoded.command == Command.DEL.value:
+                    res = kv.delete(decoded)
                 conn.sendall(res.value.encode('utf-8'))
                 print(f"Received {data.decode('utf-8')}")

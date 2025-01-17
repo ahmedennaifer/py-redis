@@ -31,6 +31,10 @@ class RESP:
         v_length = self.get_length(self.v) if self.v is not None else " "
         if self.instruction == Command.GET:
                 return f"*2{self.RESP_CRLF}${len(Command.GET.value)}{self.RESP_CRLF}{Command.GET.value}{self.RESP_CRLF}${k_length}{self.RESP_CRLF}{self.k}{self.RESP_CRLF}"
+                
+        elif self.instruction == Command.DEL:
+                return f"*2{self.RESP_CRLF}${len(Command.DEL.value)}{self.RESP_CRLF}{Command.DEL.value}{self.RESP_CRLF}${k_length}{self.RESP_CRLF}{self.k}{self.RESP_CRLF}"
+                
         elif self.instruction == Command.SET:
                 return f"*3{self.RESP_CRLF}${len(Command.SET.value)}{self.RESP_CRLF}{Command.SET.value}{self.RESP_CRLF}${k_length}{self.RESP_CRLF}{self.k}{self.RESP_CRLF}${v_length}{self.RESP_CRLF}{self.v}{self.RESP_CRLF}"
             

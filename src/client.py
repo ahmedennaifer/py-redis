@@ -25,7 +25,7 @@ class Client:
         return data
 
 if __name__ == "__main__":
-    c = client()
+    c = Client()
     while True:
         print("Sending data...")
         payload = input("")
